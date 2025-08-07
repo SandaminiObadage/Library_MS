@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;               // Required for EF Core
 using LibraryAPI.Data;
+using LibraryAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Microsoft.OpenApi.Models;                    // Required for Swagger
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,14 +15,35 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=library.db"));
 
-// ✅ Add Swagger (for API testing)
+// Add JWT configuration
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+        };
+    });
+
+// Register services
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<PasswordService>();
+
+//  Add Swagger (for API testing)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library API", Version = "v1" });
 });
 
-// ✅ Optional: Allow CORS (for React frontend to connect)
+// Allow CORS (for React frontend to connect)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -38,18 +63,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// ✅ Enable middleware
+// Enable middleware
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Enable CORS
+// Enable CORS
 app.UseCors("AllowAll");
 
+// Enable Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Enable Swagger UI
+// Enable Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
