@@ -88,7 +88,7 @@ export const tokenService = {
   clearAll: () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('authUser');
-    // Clear any other potential auth keys
+    // Clear any other 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }

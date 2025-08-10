@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;               // Required for EF Core
+﻿using Microsoft.EntityFrameworkCore;               // EF Core
 using LibraryAPI.Data;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.OpenApi.Models;                    // Required for Swagger
+using Microsoft.OpenApi.Models;                  
 
 var builder = WebApplication.CreateBuilder(args);
 

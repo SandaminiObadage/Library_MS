@@ -54,7 +54,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       console.warn('Unauthorized access - token may be expired');
       tokenService.removeToken();
-      // You could also trigger a logout here or redirect to login
+      // Logout here or redirect to login
       window.location.reload(); // Simple approach - reload to reset auth state
     }
     

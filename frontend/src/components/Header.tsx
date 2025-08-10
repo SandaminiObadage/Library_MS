@@ -4,7 +4,12 @@ import { useAuth } from '../contexts/AuthContext';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onNavigate: (page: 'home' | 'about') => void;
+  currentPage: 'home' | 'about';
+}
+
+const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -29,7 +34,7 @@ const Header: React.FC = () => {
       logout();
     } catch (error) {
       console.error('Error during logout:', error);
-      // Fallback: manually clear everything
+      // Fallback, manually clear everything
       localStorage.clear();
       window.location.reload();
     }
@@ -47,7 +52,14 @@ const Header: React.FC = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home" className="fw-semibold">
+              <Nav.Link 
+                href="#home" 
+                className={`fw-semibold ${currentPage === 'home' ? 'active' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('home');
+                }}
+              >
                 <i className="fas fa-home me-1"></i>
                 Home
               </Nav.Link>
@@ -57,7 +69,14 @@ const Header: React.FC = () => {
                   My Books
                 </Nav.Link>
               )}
-              <Nav.Link href="#about" className="fw-semibold">
+              <Nav.Link 
+                href="#about" 
+                className={`fw-semibold ${currentPage === 'about' ? 'active' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('about');
+                }}
+              >
                 <i className="fas fa-info-circle me-1"></i>
                 About
               </Nav.Link>

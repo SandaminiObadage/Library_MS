@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
+import heroImage from '../assets/images/library.png';
 
 interface HeroSectionProps {
   onAddBook: () => void;
@@ -68,7 +69,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAddBook }) => {
                       size="lg" 
                       className="fw-semibold px-4"
                       onClick={() => {
-                        // This will trigger the register modal
+                        //  register modal
                         const registerBtn = document.querySelector('[data-testid="register-button"]') as HTMLElement;
                         registerBtn?.click();
                       }}
@@ -89,15 +90,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onAddBook }) => {
               </div>
             </div>
           </Col>
-          <Col lg={6} className="text-center">
-            <div className="hero-image">
-              <div className="book-stack-animation">
-                <i className="fas fa-book-open text-warning" style={{ fontSize: '8rem' }}></i>
-              </div>
-              <div className="floating-icons">
-                <i className="fas fa-bookmark text-light opacity-50 floating-icon-1"></i>
-                <i className="fas fa-pencil-alt text-light opacity-50 floating-icon-2"></i>
-                <i className="fas fa-search text-light opacity-50 floating-icon-3"></i>
+          <Col lg={6} className="hero-image-col">
+            <div className="hero-image-section">
+              <img 
+                src={heroImage} 
+                alt="Digital Library Management System" 
+                className="hero-image-clean"
+              />
+              <div className="floating-elements">
+                <div className="floating-icon floating-icon-1">
+                  <i className="fas fa-bookmark"></i>
+                </div>
+                <div className="floating-icon floating-icon-2">
+                  <i className="fas fa-book-open"></i>
+                </div>
+                <div className="floating-icon floating-icon-3">
+                  <i className="fas fa-search"></i>
+                </div>
+                <div className="floating-icon floating-icon-4">
+                  <i className="fas fa-heart"></i>
+                </div>
               </div>
             </div>
           </Col>

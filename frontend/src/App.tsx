@@ -8,12 +8,14 @@ import Footer from './components/Footer';
 import HeroSection from './components/HeroSection';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
+import About from './components/About';
 import { Book } from './types/Book';
 
 const App: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editingBook, setEditingBook] = useState<Book | undefined>(undefined);
   const [refreshList, setRefreshList] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
 
   const handleAddBook = () => {
     setEditingBook(undefined);
@@ -38,22 +40,32 @@ const App: React.FC = () => {
     setEditingBook(undefined);
   };
 
+  const handleNavigation = (page: 'home' | 'about') => {
+    setCurrentPage(page);
+  };
+
   return (
     <AuthProvider>
       <div className="App">
-        <Header />
+        <Header onNavigate={handleNavigation} currentPage={currentPage} />
         
         <main className="content-wrapper">
-          <HeroSection onAddBook={handleAddBook} />
-          
-          <div style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)', minHeight: '100vh' }}>
-            <BookList
-              onEdit={handleEditBook}
-              onAdd={handleAddBook}
-              refresh={refreshList}
-              onRefreshComplete={handleRefreshComplete}
-            />
-          </div>
+          {currentPage === 'home' ? (
+            <>
+              <HeroSection onAddBook={handleAddBook} />
+              
+              <div style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)', minHeight: '100vh' }}>
+                <BookList
+                  onEdit={handleEditBook}
+                  onAdd={handleAddBook}
+                  refresh={refreshList}
+                  onRefreshComplete={handleRefreshComplete}
+                />
+              </div>
+            </>
+          ) : (
+            <About />
+          )}
         </main>
         
         <Footer />

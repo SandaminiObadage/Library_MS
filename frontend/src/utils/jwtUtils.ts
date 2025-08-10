@@ -7,9 +7,9 @@ export interface JwtPayload {
   iat?: number; // Issued at time
   
   // Alternative fields that might be used
-  sub?: string; // Subject (alternative for user ID)
-  userId?: string; // Direct userId field
-  id?: string; // Another possible ID field
+  sub?: string; 
+  userId?: string; 
+  id?: string; 
   
   // Microsoft Identity claims (long format)
   'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'?: string;

@@ -78,16 +78,7 @@ const BookList: React.FC<BookListProps> = ({ onEdit, onAdd, refresh, onRefreshCo
               <p className="text-muted mb-4 lead">
                 Please sign in to view and manage your personal book collection.
               </p>
-              <div className="d-flex justify-content-center gap-3">
-                <Button variant="warning" size="lg" className="fw-semibold px-4">
-                  <i className="fas fa-sign-in-alt me-2"></i>
-                  Sign In
-                </Button>
-                <Button variant="outline-dark" size="lg" className="fw-semibold px-4">
-                  <i className="fas fa-user-plus me-2"></i>
-                  Create Account
-                </Button>
-              </div>
+             
             </div>
           </Col>
         </Row>

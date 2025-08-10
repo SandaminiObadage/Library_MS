@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
         <Row>
           <Col className="text-center">
             <p className="text-muted mb-0">
-              © 2025 Library Management System. Built for Expernetic LLC Internship Assignment.
+              © 2025 Library Management System. Built for Expernetic Internship Assignment.
             </p>
           </Col>
         </Row>

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, LoginData, RegisterData, AuthContextType } from '../types/Auth';
 import { authService, tokenService } from '../services/authService';
-import { decodeJwtPayload, getUserIdFromToken, isTokenExpired } from '../utils/jwtUtils';
+import {  getUserIdFromToken, isTokenExpired } from '../utils/jwtUtils';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -87,8 +87,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(true);
       const response = await authService.register(userData);
       
-      // Registration successful - DON'T auto-login
-      // Just return success, user will need to sign in manually
+      // Just return success, user will need to sign in
       console.log('Registration successful for user:', response.data.username);
       
     } catch (error: any) {

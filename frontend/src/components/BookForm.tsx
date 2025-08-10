@@ -22,7 +22,7 @@ const BookForm: React.FC<BookFormProps> = ({ show, onHide, book, onSuccess }) =>
   const [error, setError] = useState<string>('');
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
-  // Check if user is authenticated before allowing form submission
+  // Check if user is authenticated before form submission
   useEffect(() => {
     if (show && !isAuthenticated) {
       setError('You must be logged in to add or edit books.');
