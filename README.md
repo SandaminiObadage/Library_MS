@@ -12,11 +12,11 @@ A full-stack web application for managing personal book collections, built with 
 - Secure logout functionality
 
 ### 📚 Book Management
-- **View Books**: Display all books in a responsive card layout
-- **Add Book**: Create new book records with title, author, and description
-- **Edit Book**: Update existing book information
-- **Delete Book**: Remove books with confirmation dialog
-- **User-specific Collections**: Each user can only see and manage their own books
+- View Books: Display all books in a responsive card layout
+- Add Book: Create new book records with title, author, and description
+- Edit Book: Update existing book information
+- Delete Book: Remove books with confirmation dialog
+- User-specific Collections: Each user can only see and manage their own books
 
 ### 🎨 Modern UI/UX
 - Responsive design that works on desktop and mobile devices
@@ -28,25 +28,25 @@ A full-stack web application for managing personal book collections, built with 
 ## Technology Stack
 
 ### Backend (.NET 6)
-- **Framework**: ASP.NET Core 6
-- **Database**: SQLite with Entity Framework Core
-- **Authentication**: JWT tokens with Microsoft Identity
-- **Password Security**: BCrypt hashing
-- **API**: RESTful API design
-- **Port**: HTTPS 7155 / HTTP 5090
+- Framework: ASP.NET Core 6
+- Database: SQLite with Entity Framework Core
+- Authentication: JWT tokens with Microsoft Identity
+- Password Security: BCrypt hashing
+- API: RESTful API design
+- Port: HTTPS 7155 / HTTP 5090
 
 ### Frontend (React TypeScript)
-- **Framework**: React 18 with TypeScript
-- **UI Library**: Bootstrap 5 + React Bootstrap
-- **HTTP Client**: Axios with interceptors
-- **State Management**: React Context API
-- **Icons**: Font Awesome
-- **Port**: 3000
+- Framework: React 18 with TypeScript
+- UI Library: Bootstrap 5 + React Bootstrap
+- HTTP Client: Axios with interceptors
+- State Management: React Context API
+- Icons: Font Awesome
+- Port: 3000
 
 ### Database Schema
-- **Users Table**: Id, Username, Email, PasswordHash, CreatedAt
-- **Books Table**: Id, Title, Author, Description, UserId (FK), CreatedAt
-- **Relationships**: One-to-Many (User → Books)
+- Users Table: Id, Username, Email, PasswordHash, CreatedAt
+- Books Table: Id, Title, Author, Description, UserId (FK), CreatedAt
+- Relationships: One-to-Many (User → Books)
 
 ## Prerequisites
 
@@ -58,34 +58,31 @@ A full-stack web application for managing personal book collections, built with 
 ## Installation & Setup
 
 ### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd Library_MS
-```
+
+git clone https://github.com/SandaminiObadage/Library_MS.git
+cd Library_MS_New
+
 
 ### 2. Backend Setup (.NET 6)
-```bash
-# Navigate to backend directory
-cd backend/LibraryAPI/LibraryAPI
 
-# Restore NuGet packages
-dotnet restore
-
-# Build the project
-dotnet build
-
+####  Using Visual Studio
+1. Open Visual Studio 2022
+2. Click "Open a project or solution"
+3. Navigate to `backend/LibraryAPI/LibraryAPI.sln` and open it
+4. Right-click on the solution in Solution Explorer → "Restore NuGet Packages"
+5. Build the project: `Build` → `Build Solution` (or press `Ctrl+Shift+B`)
+6. Set LibraryAPI as startup project (right-click project → "Set as Startup Project")
+7. Run the project: Press `F5` or click the green "Start" button
+8. Visual Studio will automatically open the browser to the API URL
 # Run database migrations (if needed)
 dotnet ef database update
 
-# Start the backend server
-dotnet run
-```
 The backend will run at:
 - HTTPS: https://localhost:7155
 - HTTP: http://localhost:5090
 
 ### 3. Frontend Setup (React)
-```bash
+
 # Navigate to frontend directory (in a new terminal)
 cd frontend
 
@@ -94,64 +91,106 @@ npm install
 
 # Start the development server
 npm start
-```
+
 The frontend will run at: http://localhost:3000
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/Auth/register` - User registration
-- `POST /api/Auth/login` - User login
+- POST /api/Auth/register - User registration
+- POST /api/Auth/login - User login
 
 ### Books (Protected Routes)
-- `GET /api/Books` - Get user's books
-- `GET /api/Books/{id}` - Get specific book
-- `POST /api/Books` - Create new book
-- `PUT /api/Books/{id}` - Update book
-- `DELETE /api/Books/{id}` - Delete book
+- GET /api/Books - Get user's books
+- GET /api/Books/{id} - Get specific book
+- POST /api/Books - Create new book
+- PUT /api/Books/{id} - Update book
+- DELETE /api/Books/{id} - Delete book
 
 ## Project Structure
 
 ```
-Library_MS/
+Library_MS_New/
 ├── backend/
+│   ├── LibraryAPI.sln              # Visual Studio solution file
+│   ├── .vs/                        # Visual Studio cache and settings
 │   └── LibraryAPI/
-│       └── LibraryAPI/
-│           ├── Controllers/        # API controllers
-│           │   ├── AuthController.cs
-│           │   └── BooksController.cs
-│           ├── Models/            # Data models & DTOs
-│           │   ├── User.cs
-│           │   ├── Book.cs
-│           │   ├── CreateBookDto.cs
-│           │   └── UpdateBookDto.cs
-│           ├── Data/              # Database context
-│           ├── Services/          # Business logic
-│           │   ├── JwtService.cs
-│           │   └── PasswordService.cs
-│           └── Program.cs         # Application startup
+│       ├── Program.cs              # Application startup
+│       ├── LibraryAPI.csproj       # Project configuration file
+│       ├── appsettings.json        # Production configuration
+│       ├── appsettings.Development.json # Development configuration
+│       ├── library.db              # SQLite database file
+│       ├── Controllers/            # API controllers
+│       │   ├── AuthController.cs   # Authentication endpoints
+│       │   ├── BooksController.cs  # Book CRUD operations
+│       │   └── HomeController.cs   # Default MVC controller
+│       ├── Models/                 # Data models & DTOs
+│       │   ├── User.cs            # User entity model
+│       │   ├── Book.cs            # Book entity model
+│       │   ├── CreateBookDto.cs   # Book creation DTO
+│       │   ├── UpdateBookDto.cs   # Book update DTO
+│       │   ├── LoginDto.cs        # Login request DTO
+│       │   ├── RegisterDto.cs     # Registration request DTO
+│       │   ├── AuthResponseDto.cs # Authentication response DTO
+│       │   └── ErrorViewModel.cs  # Error handling model
+│       ├── Data/                   # Database context
+│       │   └── AppDbContext.cs    # Entity Framework context
+│       ├── Services/               # Business logic services
+│       │   ├── JwtService.cs      # JWT token management
+│       │   └── PasswordService.cs # Password hashing service
+│       ├── Migrations/             # Entity Framework migrations
+│       │   ├── 20250807154814_InitialCreateWithAuthentication.cs
+│       │   ├── 20250807154814_InitialCreateWithAuthentication.Designer.cs
+│       │   └── AppDbContextModelSnapshot.cs
+│       ├── Properties/             # Project properties
+│         └── launchSettings.json # Development server settings
+│       
 ├── frontend/
-│   └── src/
-│       ├── components/           # React components
-│       │   ├── Header.tsx
-│       │   ├── HeroSection.tsx
-│       │   ├── BookList.tsx
-│       │   ├── BookForm.tsx
-│       │   ├── LoginModal.tsx
-│       │   └── RegisterModal.tsx
-│       ├── contexts/            # React Context
-│       │   └── AuthContext.tsx
-│       ├── services/           # API services
-│       │   ├── authService.ts
-│       │   └── bookService.ts
-│       ├── types/             # TypeScript definitions
-│       │   ├── Auth.ts
-│       │   └── Book.ts
-│       ├── utils/            # Utility functions
-│       │   └── jwtUtils.ts
-│       └── App.tsx           # Main application
-└── README.md                # This file
-```
+│   ├── package.json               # npm dependencies and scripts
+│   ├── tsconfig.json             # TypeScript configuration
+│   ├── .gitignore                # Git ignore patterns
+│   ├── public/                   # Static public assets
+│   │   ├── index.html           # Main HTML template
+│   │   ├── favicon.ico          # Website favicon
+│   │   ├── logo192.png          # PWA icon (192x192)
+│   │   ├── logo512.png          # PWA icon (512x512)
+│   │   ├── manifest.json        # PWA manifest file
+│   │   └── robots.txt           # Search engine robots file
+│   └── src/                     # React source code
+│       ├── App.tsx              # Main application component
+│       ├── App.css              # Global application styles
+│       ├── App.test.tsx         # Application unit tests
+│       ├── index.tsx            # React application entry point
+│       ├── index.css            # Global CSS styles
+│       ├── logo.svg             # React logo SVG
+│       ├── react-app-env.d.ts   # React TypeScript declarations
+│       ├── reportWebVitals.ts   # Web performance monitoring
+│       ├── setupTests.ts        # Jest testing setup
+│       ├── assets/              # Static assets
+│       │   └── images/
+│       │       └── library.png  # Hero section image
+│       ├── components/          # React UI components
+│       │   ├── About.tsx        # About page component
+│       │   ├── Header.tsx       # Navigation header component
+│       │   ├── HeroSection.tsx  # Landing page hero section
+│       │   ├── BookList.tsx     # Books display component
+│       │   ├── BookForm.tsx     # Add/Edit book form
+│       │   ├── LoginModal.tsx   # Login modal dialog
+│       │   ├── RegisterModal.tsx # Registration modal dialog
+│       │   └── Footer.tsx       # Page footer component
+│       ├── contexts/            # React Context providers
+│       │   └── AuthContext.tsx  # Authentication state management
+│       ├── services/            # API service layer
+│       │   ├── authService.ts   # Authentication API calls
+│       │   └── bookService.ts   # Book CRUD API operations
+│       ├── types/               # TypeScript type definitions
+│       │   ├── Auth.ts          # Authentication-related types
+│       │   └── Book.ts          # Book entity types
+│       └── utils/               # Utility functions
+│           └── jwtUtils.ts      # JWT token utility functions
+└── README.md                    # Project documentation
+
+
 
 ## Usage
 
@@ -173,7 +212,7 @@ Library_MS/
 ## Configuration
 
 ### Backend Configuration (appsettings.json)
-```json
+json
 {
   "Jwt": {
     "Key": "your-super-secret-jwt-key-minimum-256-bits",
@@ -184,28 +223,19 @@ Library_MS/
     "DefaultConnection": "Data Source=library.db"
   }
 }
-```
+
 
 ### Frontend Configuration
 Update the API URL in `src/services/authService.ts` and `src/services/bookService.ts` if your backend runs on a different port.
 
 ## Security Features
 
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: BCrypt with salt for password security
-- **CORS Configuration**: Properly configured for development
-- **Input Validation**: Both client-side and server-side validation
-- **SQL Injection Protection**: Entity Framework parameterized queries
-- **User Isolation**: Users can only access their own books
+- JWT Authentication: Secure token-based authentication
+- Password Hashing: BCrypt with salt for password security
+- CORS Configuration: Properly configured for development
+- Input Validation: Both client-side and server-side validation
+- User Isolation: Users can only access their own books
 
-## Troubleshooting
-
-### Common Issues
-1. **CORS Errors**: Ensure backend allows requests from `http://localhost:3000`
-2. **SSL Certificate**: Accept the self-signed certificate for HTTPS
-3. **Database Issues**: Delete `library.db` and restart backend to recreate
-4. **Port Conflicts**: Change ports in configuration if needed
-5. **JWT Errors**: Check JWT key configuration in appsettings.json
 
 ### Development Tips
 - Check browser console for detailed error messages
@@ -216,38 +246,20 @@ Update the API URL in `src/services/authService.ts` and `src/services/bookServic
 ## Scripts
 
 ### Backend
-```bash
 dotnet run                 # Start the server
 dotnet build              # Build the project
 dotnet test               # Run tests
 dotnet ef migrations add  # Add migration
 dotnet ef database update # Apply migrations
-```
+
 
 ### Frontend
-```bash
 npm start                # Start development server
 npm run build           # Build for production
 npm test                # Run tests
 npm run eject           # Eject from Create React App
-```
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For questions or support, please contact the development team.
-
----
-
-**Built with ❤️ for efficient library management**

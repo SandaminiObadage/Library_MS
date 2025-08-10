@@ -92,11 +92,11 @@ const BookList: React.FC<BookListProps> = ({ onEdit, onAdd, refresh, onRefreshCo
         <Col>
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h2 className="text-dark fw-bold">
-                <i className="fas fa-books me-2 text-primary"></i>
+              <h2 className="text-dark fw-bold mb-1">
+    <i className="fas fa-books me-2 text-primary"></i>
                 Your Book Collection
               </h2>
-              <p className="text-muted">Manage and organize your digital library</p>
+              <p className="text-muted mb-0 ms-1">Manage and organize your digital library</p>
             </div>
             <Button variant="primary" onClick={onAdd} size="lg" className="shadow-sm">
               <i className="fas fa-plus me-2"></i>

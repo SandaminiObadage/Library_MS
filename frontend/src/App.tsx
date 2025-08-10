@@ -5,17 +5,17 @@ import './App.css';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import About from './components/About';
 import HeroSection from './components/HeroSection';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
-import About from './components/About';
 import { Book } from './types/Book';
 
 const App: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<string>('home');
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editingBook, setEditingBook] = useState<Book | undefined>(undefined);
   const [refreshList, setRefreshList] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
 
   const handleAddBook = () => {
     setEditingBook(undefined);
@@ -40,17 +40,17 @@ const App: React.FC = () => {
     setEditingBook(undefined);
   };
 
-  const handleNavigation = (page: 'home' | 'about') => {
+  const handleNavigation = (page: string) => {
     setCurrentPage(page);
   };
 
   return (
     <AuthProvider>
       <div className="App">
-        <Header onNavigate={handleNavigation} currentPage={currentPage} />
+        <Header onNavigate={handleNavigation} />
         
         <main className="content-wrapper">
-          {currentPage === 'home' ? (
+          {currentPage === 'home' && (
             <>
               <HeroSection onAddBook={handleAddBook} />
               
@@ -63,9 +63,9 @@ const App: React.FC = () => {
                 />
               </div>
             </>
-          ) : (
-            <About />
           )}
+          
+          {currentPage === 'about' && <About />}
         </main>
         
         <Footer />

@@ -5,11 +5,10 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 
 interface HeaderProps {
-  onNavigate: (page: 'home' | 'about') => void;
-  currentPage: 'home' | 'about';
+  onNavigate: (page: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
+const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -34,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
       logout();
     } catch (error) {
       console.error('Error during logout:', error);
-      // Fallback, manually clear everything
+      // Fallback: manually clear everything
       localStorage.clear();
       window.location.reload();
     }
@@ -44,7 +43,11 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
     <>
       <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm">
         <Container>
-          <Navbar.Brand href="#" className="d-flex align-items-center">
+          <Navbar.Brand 
+            onClick={() => onNavigate('home')} 
+            className="d-flex align-items-center"
+            style={{ cursor: 'pointer' }}
+          >
             <i className="fas fa-book-open me-2 text-warning" style={{ fontSize: '1.5rem' }}></i>
             <span className="fw-bold">Library Management System</span>
           </Navbar.Brand>
@@ -53,29 +56,27 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage }) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link 
-                href="#home" 
-                className={`fw-semibold ${currentPage === 'home' ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('home');
-                }}
+                onClick={() => onNavigate('home')} 
+                className="fw-semibold"
+                style={{ cursor: 'pointer' }}
               >
                 <i className="fas fa-home me-1"></i>
                 Home
               </Nav.Link>
               {isAuthenticated && (
-                <Nav.Link href="#books" className="fw-semibold">
+                <Nav.Link 
+                  onClick={() => onNavigate('home')} 
+                  className="fw-semibold"
+                  style={{ cursor: 'pointer' }}
+                >
                   <i className="fas fa-book me-1"></i>
                   My Books
                 </Nav.Link>
               )}
               <Nav.Link 
-                href="#about" 
-                className={`fw-semibold ${currentPage === 'about' ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('about');
-                }}
+                onClick={() => onNavigate('about')} 
+                className="fw-semibold"
+                style={{ cursor: 'pointer' }}
               >
                 <i className="fas fa-info-circle me-1"></i>
                 About
