@@ -104,21 +104,15 @@ const BookForm: React.FC<BookFormProps> = ({ show, onHide, book, onSuccess }) =>
       setLoading(true);
       setError('');
 
-      // Prepare the data with userId
-      const bookData: BookFormData = {
-        ...formData,
-        userId: user.id
-      };
-
       // Log the data being sent for debugging
-      console.log('Form Data being sent:', bookData);
+      console.log('Form Data being sent:', formData);
       console.log('Book ID for update:', book?.id);
 
       if (book && book.id) {
-        const response = await updateBook(book.id, bookData);
+        const response = await updateBook(book.id, formData);
         console.log('Update response:', response);
       } else {
-        const response = await createBook(bookData);
+        const response = await createBook(formData);
         console.log('Create response:', response);
       }
 

@@ -12,8 +12,5 @@ namespace LibraryAPI.Models
         
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
-        
-        [Required(ErrorMessage = "User ID is required")]
-        public int UserId { get; set; }
     }
 }

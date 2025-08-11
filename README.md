@@ -113,15 +113,17 @@ The frontend will run at: http://localhost:3000
 Library_MS_New/
 ├── backend/
 │   ├── LibraryAPI.sln              # Visual Studio solution file
-│   ├── .vs/                       
+│   ├── .vs/                        # Visual Studio cache and settings
 │   └── LibraryAPI/
 │       ├── Program.cs              # Application startup
 │       ├── LibraryAPI.csproj       # Project configuration file
+│       ├── appsettings.json        # Production configuration
+│       ├── appsettings.Development.json # Development configuration
 │       ├── library.db              # SQLite database file
 │       ├── Controllers/            # API controllers
 │       │   ├── AuthController.cs   # Authentication endpoints
 │       │   ├── BooksController.cs  # Book CRUD operations
-│       │  
+│       │   └── HomeController.cs   # Default MVC controller
 │       ├── Models/                 # Data models & DTOs
 │       │   ├── User.cs            # User entity model
 │       │   ├── Book.cs            # Book entity model
@@ -146,10 +148,24 @@ Library_MS_New/
 ├── frontend/
 │   ├── package.json               # npm dependencies and scripts
 │   ├── tsconfig.json             # TypeScript configuration
-│   ├── .gitignore                # Git ignore pattern        
+│   ├── .gitignore                # Git ignore patterns
+│   ├── public/                   # Static public assets
+│   │   ├── index.html           # Main HTML template
+│   │   ├── favicon.ico          # Website favicon
+│   │   ├── logo192.png          # PWA icon (192x192)
+│   │   ├── logo512.png          # PWA icon (512x512)
+│   │   ├── manifest.json        # PWA manifest file
+│   │   └── robots.txt           # Search engine robots file
 │   └── src/                     # React source code
 │       ├── App.tsx              # Main application component
 │       ├── App.css              # Global application styles
+│       ├── App.test.tsx         # Application unit tests
+│       ├── index.tsx            # React application entry point
+│       ├── index.css            # Global CSS styles
+│       ├── logo.svg             # React logo SVG
+│       ├── react-app-env.d.ts   # React TypeScript declarations
+│       ├── reportWebVitals.ts   # Web performance monitoring
+│       ├── setupTests.ts        # Jest testing setup
 │       ├── assets/              # Static assets
 │       │   └── images/
 │       │       └── library.png  # Hero section image

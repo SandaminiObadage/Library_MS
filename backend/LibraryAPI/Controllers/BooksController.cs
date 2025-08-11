@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryAPI.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class BooksController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -14,14 +17,35 @@ public class BooksController : ControllerBase
         _context = context;
     }
 
+    private int GetCurrentUserId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        {
+            throw new UnauthorizedAccessException("Invalid user token");
+        }
+        return userId;
+    }
+
     [HttpGet]
-    public async Task<IActionResult> GetBooks() => Ok(await _context.Books.ToListAsync());
+    public async Task<IActionResult> GetBooks()
+    {
+        var userId = GetCurrentUserId();
+        var books = await _context.Books.Where(b => b.UserId == userId).ToListAsync();
+        return Ok(books);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetBook(int id)
     {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null) return NotFound();
+        var userId = GetCurrentUserId();
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
+        
+        if (book == null)
+        {
+            return NotFound();
+        }
+
         return Ok(book);
     }
 
@@ -33,12 +57,7 @@ public class BooksController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        // Check if user exists
-        var userExists = await _context.Users.AnyAsync(u => u.Id == bookDto.UserId);
-        if (!userExists)
-        {
-            return BadRequest("Invalid user ID");
-        }
+        var userId = GetCurrentUserId();
 
         // Create book entity from DTO
         var book = new Book
@@ -46,7 +65,7 @@ public class BooksController : ControllerBase
             Title = bookDto.Title,
             Author = bookDto.Author,
             Description = bookDto.Description,
-            UserId = bookDto.UserId
+            UserId = userId // Always use the authenticated user's ID
         };
 
         _context.Books.Add(book);
@@ -62,24 +81,19 @@ public class BooksController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var existingBook = await _context.Books.FindAsync(id);
+        var userId = GetCurrentUserId();
+        
+        var existingBook = await _context.Books.FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
         if (existingBook == null)
         {
             return NotFound();
-        }
-
-        // Check if user exists
-        var userExists = await _context.Users.AnyAsync(u => u.Id == bookDto.UserId);
-        if (!userExists)
-        {
-            return BadRequest("Invalid user ID");
         }
 
         // Update book properties
         existingBook.Title = bookDto.Title;
         existingBook.Author = bookDto.Author;
         existingBook.Description = bookDto.Description;
-        existingBook.UserId = bookDto.UserId;
+        // UserId remains the same (current user)
 
         _context.Entry(existingBook).State = EntityState.Modified;
         
@@ -89,7 +103,7 @@ public class BooksController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!await _context.Books.AnyAsync(e => e.Id == id))
+            if (!await _context.Books.AnyAsync(e => e.Id == id && e.UserId == userId))
             {
                 return NotFound();
             }
@@ -102,8 +116,14 @@ public class BooksController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null) return NotFound();
+        var userId = GetCurrentUserId();
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
+        
+        if (book == null) 
+        {
+            return NotFound();
+        }
+        
         _context.Books.Remove(book);
         await _context.SaveChangesAsync();
         return NoContent();

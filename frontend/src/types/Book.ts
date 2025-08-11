@@ -10,7 +10,6 @@ export interface BookFormData {
   title: string;
   author: string;
   description: string;
-  userId?: number;
 }
 
 export interface BookUpdateData extends BookFormData {

@@ -69,8 +69,7 @@ export const createBook = (book: BookFormData) => {
   const bookDto = {
     title: book.title,
     author: book.author, 
-    description: book.description,
-    userId: book.userId
+    description: book.description
   };
   console.log('Sending Book DTO:', bookDto);
   return api.post<Book>('', bookDto);
@@ -78,11 +77,9 @@ export const createBook = (book: BookFormData) => {
 export const updateBook = (id: number, book: BookFormData) => {
   // Create a clean DTO with ID for PUT requests
   const bookDto = {
-    id: id,
     title: book.title,
     author: book.author,
-    description: book.description,
-    userId: book.userId
+    description: book.description
   };
   console.log('Sending Book Update DTO:', bookDto);
   return api.put<Book>(`/${id}`, bookDto);
