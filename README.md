@@ -81,15 +81,15 @@ The backend will run at:
 - HTTPS: https://localhost:7155
 - HTTP: http://localhost:5090
 
-### 3. Frontend Setup (React)
+## 3. Frontend Setup (React)
 
-# Navigate to frontend directory (in a new terminal)
+### Navigate to frontend directory (in a new terminal)
 cd frontend
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Start the development server
+### Start the development server
 npm start
 
 The frontend will run at: http://localhost:3000
@@ -149,23 +149,9 @@ Library_MS_New/
 │   ├── package.json               # npm dependencies and scripts
 │   ├── tsconfig.json             # TypeScript configuration
 │   ├── .gitignore                # Git ignore patterns
-│   ├── public/                   # Static public assets
-│   │   ├── index.html           # Main HTML template
-│   │   ├── favicon.ico          # Website favicon
-│   │   ├── logo192.png          # PWA icon (192x192)
-│   │   ├── logo512.png          # PWA icon (512x512)
-│   │   ├── manifest.json        # PWA manifest file
-│   │   └── robots.txt           # Search engine robots file
 │   └── src/                     # React source code
 │       ├── App.tsx              # Main application component
 │       ├── App.css              # Global application styles
-│       ├── App.test.tsx         # Application unit tests
-│       ├── index.tsx            # React application entry point
-│       ├── index.css            # Global CSS styles
-│       ├── logo.svg             # React logo SVG
-│       ├── react-app-env.d.ts   # React TypeScript declarations
-│       ├── reportWebVitals.ts   # Web performance monitoring
-│       ├── setupTests.ts        # Jest testing setup
 │       ├── assets/              # Static assets
 │       │   └── images/
 │       │       └── library.png  # Hero section image
